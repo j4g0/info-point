@@ -1,0 +1,17 @@
+{
+    "name": "roman/info-point",
+    "description": "Store and display different kinds of info points",
+    "type": "project",
+    "license": "GPL2",
+    "authors": [
+        {
+            "name": "Roman Handke",
+            "email": "roman.handke@online.de"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+      "psr-4": {"Inc\\": "./inc"}
+    }
+}
