@@ -6,14 +6,21 @@ namespace Inc\Api;
 
 class SettingsApi
 {
-  public $admin_pages = [];
-  public $admin_subpages = [];
+  public $admin_pages     = [];
+  public $admin_subpages  = [];
+  public $settings        = [];
+  public $sections        = [];
+  public $fields          = [];
 
   public function register()
   {
     if ( !empty( $this->admin_pages ) ) {
       add_action( 'admin_menu', [ $this, 'addAdminMenu' ] );
     }
+
+   	if ( !empty($this->settings) ) {
+			add_action( 'admin_init', [ $this, 'registerCustomFields' ] );
+		}
   }
 
   public function addPages( array $pages )

@@ -6,16 +6,20 @@ namespace Inc\Pages;
 
 use Inc\Api\SettingsApi;
 use Inc\Base\BaseController;
+use Inc\Api\Callbacks\AdminCallbacks;
 
 class Admin extends BaseController
 {
   public $settings;
-  public $pages = [];
-  public $subpages = [];
+  public $callbacks;
+  public $pages     = [];
+  public $subpages  = [];
 
   public function register()
   {
     $this->settings = new SettingsApi();
+
+    $this->callbacks = new AdminCallbacks();
 
     $this->setPages();
 
@@ -32,9 +36,7 @@ class Admin extends BaseController
         'menu_title'    => 'InfoPoint',
         'capability'    => 'manage_options',
         'menu_slug'     => 'info_point',
-        'callback'      => function() {
-          return require_once( "$this->plugin_path/templates/admin.php" );
-        },
+        'callback'      => [ $this->callbacks, 'adminDashboard' ],
         'icon_url'      => 'dashicons-store',
         'position'      => 110
       ]
