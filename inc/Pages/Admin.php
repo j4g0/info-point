@@ -4,30 +4,45 @@
  */
 namespace Inc\Pages;
 
-use \Inc\Api\SettingsApi;
+use Inc\Api\SettingsApi;
+use Inc\Base\BaseController;
 
-class Admin
+class Admin extends BaseController
 {
   public $settings;
   public $pages = [];
   public $subpages = [];
 
-  public function __construct()
+  public function register()
   {
     $this->settings = new SettingsApi();
 
+    $this->setPages();
+
+    $this->setSubPages();
+
+    $this->settings->addPages( $this->pages )->withSubPage( 'Dashboard' )->addSubPages( $this->subpages )->register();
+  }
+
+  public function setPages()
+  {
     $this->pages = [
       [
         'page_title'    => 'Info Point',
         'menu_title'    => 'InfoPoint',
         'capability'    => 'manage_options',
         'menu_slug'     => 'info_point',
-        'callback'      => function() { echo '<h1>Info Point Admin</h1>'; },
+        'callback'      => function() {
+          return require_once( "$this->plugin_path/templates/admin.php" );
+        },
         'icon_url'      => 'dashicons-store',
         'position'      => 110
       ]
     ];
+  }
 
+  public function setSubPages()
+  {
     $this->subpages = [
       [
         'parent_slug'   => 'info_point',
@@ -51,10 +66,5 @@ class Admin
         'menu_slug'     => 'edit.php?post_type=employment'
       ]
     ];
-  }
-
-  public function register()
-  {
-    $this->settings->addPages( $this->pages )->withSubPage( 'Dashboard' )->addSubPages( $this->subpages )->register();
   }
 }
