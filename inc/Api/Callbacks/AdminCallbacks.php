@@ -14,7 +14,8 @@ class AdminCallbacks extends BaseController
     return require_once( "$this->plugin_path/templates/admin.php" );
   }
 
-  public function infoPointGroup( $input ) {
+  public function infoPointOptionsGroup( $input )
+  {
     return $input;
   }
 
@@ -27,7 +28,7 @@ class AdminCallbacks extends BaseController
   {
     $value = esc_attr( get_option( 'text_example' ) );
     echo '
-      <input type="text" class="regular-text" name="text-example" value="' . $value .'" placeholder="Write something here!">
+      <input type="text" class="regular-text" name="text_example" value="' . $value .'" placeholder="Write something here!">
     ';
   }
 
@@ -36,4 +37,6 @@ class AdminCallbacks extends BaseController
     $value = esc_attr( get_option( 'first_name' ) );
     echo '
       <input type="text" class="regular-text" name="first_name" value="' . $value .'" placeholder="Write your first name">
-    '; } }
+    '; 
+  } 
+}

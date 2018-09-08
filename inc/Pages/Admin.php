@@ -25,7 +25,13 @@ class Admin extends BaseController
 
     $this->setSubPages();
 
+    $this->setSettings();
+    $this->setSections();
+    $this->setFields();
+
     $this->settings->addPages( $this->pages )->withSubPage( 'Dashboard' )->addSubPages( $this->subpages )->register();
+
+    add_filter( 'admin_head', [ $this, 'menuHighlight' ]);
   }
 
   public function setPages()
@@ -68,5 +74,76 @@ class Admin extends BaseController
         'menu_slug'     => 'edit.php?post_type=employment'
       ]
     ];
+  }
+
+  public function setSettings()
+  {
+    $args = [
+      [
+        'option_group'    => 'info_point_options_group',
+        'option_name'     => 'text_example',
+        'callback'        => [ $this->callbacks, 'infoPointOptionsGroup' ],
+      ],
+      [
+        'option_group'    => 'info_point_options_group',
+        'option_name'     => 'first_name',
+      ]
+    ];
+
+    $this->settings->setSettings( $args );
+  }
+
+  public function setSections()
+  {
+    $args = [
+      [
+        'id'              => 'info_point_admin_index',
+        'title'           => 'Settings',
+        'callback'        => [ $this->callbacks, 'infoPointAdminSection' ],
+        'page'            => 'info_point',
+      ]
+    ];
+
+    $this->settings->setSections( $args );
+  }
+
+  public function setFields()
+  {
+    $args = [
+      [
+        'id'              => 'text_example',
+        'title'           => 'Text Example',
+        'callback'        => [ $this->callbacks, 'infoPointTextExample' ],
+        'page'            => 'info_point',
+        'section'         => 'info_point_admin_index',
+        'args'            => [
+          'label_for'     => 'text_example',
+          'class'         => 'example-class',
+        ]
+      ],
+      [
+        'id'              => 'first_name',
+        'title'           => 'First Name',
+        'callback'        => [ $this->callbacks, 'infoPointFirstName' ],
+        'page'            => 'info_point',
+        'section'         => 'info_point_admin_index',
+        'args'            => [
+          'label_for'     => 'first_name',
+          'class'         => 'example-class',
+        ]
+      ]
+    ];
+
+    $this->settings->setFields( $args );
+  }
+
+  public function menuHighlight()
+  {
+    global $parent_file, $submenu_file, $post_type;
+
+    if ('counseling' == '$post_type') {
+      $parent_file = 'info_point';
+      $submenu_file = 'wc-settings';
+    }
   }
 }

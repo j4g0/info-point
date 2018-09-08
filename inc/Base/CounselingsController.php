@@ -5,21 +5,24 @@
 
 namespace Inc\Base;
 
-class EmploymentAgency
+use Inc\Base\BaseController;
+
+class CounselingsController extends BaseController
 {
   /**
    * @var string
    *
    * Set post type params
    */
-  private $type           = 'employment';
-  private $slug           = 'employments';
-  private $name           = 'Vermittlungsstellen';
-  private $singular_name  = 'Vermittlungsstelle';
+  private $type           = 'counseling';
+  private $slug           = 'counselings';
+  private $name           = 'Beratungsstellen';
+  private $singular_name  = 'Beratungsstelle';
 
   public function register()
   {
     add_action( 'init', [ $this, 'register_post_type' ] );
+    add_shortcode( 'ip_beratung', [ $this, 'shortcode' ] );
   }
 
   /**
@@ -48,7 +51,7 @@ class EmploymentAgency
       'public'                => true,
       'publicly_queryable'    => false,
       'show_ui'               => true,
-      'show_in_menu'          => 'edit.php?post_type=employment',
+      'show_in_menu'          => 'edit.php?post_type=counseling',
       'query_var'             => true,
       'rewrite'               => array( 'slug' => $this->slug ),
       'capability_type'       => 'post',
@@ -60,5 +63,10 @@ class EmploymentAgency
     ];
 
     register_post_type( $this->type, $args );
+  }
+
+  public function shortcode()
+  {
+    return require_once( "$this->plugin_path/templates/counselings.php" );
   }
 }

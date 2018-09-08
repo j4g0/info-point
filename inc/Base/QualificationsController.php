@@ -5,7 +5,9 @@
 
 namespace Inc\Base;
 
-class QualificationCenter
+use Inc\Base\BaseController;
+
+class QualificationsController extends BaseController
 {
   /**
    * @var string
@@ -20,6 +22,7 @@ class QualificationCenter
   public function register()
   {
     add_action( 'init', [ $this, 'register_post_type' ] );
+    add_shortcode( 'ip_qualifikation', [ $this, 'shortcode' ] );
   }
 
   /**
@@ -60,5 +63,10 @@ class QualificationCenter
     ];
 
     register_post_type( $this->type, $args );
+  }
+
+  public function shortcode()
+  {
+    return require_once( "$this->plugin_path/templates/qualifications.php" );
   }
 }

@@ -15,10 +15,10 @@ final class Init
   {
     return [
       Pages\Admin::class,
-      Base\CounselingCenter::class,
-      Base\EmploymentAgency::class,
-      Base\QualificationCenter::class,
-      Base\Counselings::class,
+      Base\CounselingsController::class,
+      Base\EmploymentsController::class,
+      Base\QualificationsController::class,
+      Api\AdvancedCustomFields::class,
     ];
   }
 

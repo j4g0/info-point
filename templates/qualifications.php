@@ -1,8 +1,8 @@
 <?php 
   $args = [
-    'post_type'   => 'counseling',
+    'post_type'   => 'qualification',
   ];
-  $counselings = new WP_QUERY( $args );
+  $qualifications = new WP_QUERY( $args );
 ?>
 
 <h1>Beratungen Template</h1>
@@ -17,8 +17,8 @@
   </thead>
 
   <tbody>
-    <?php if ( $counselings->have_posts() ): ?>
-      <?php while ($counselings->have_posts()) : $counselings->the_post(); ?>
+    <?php if ( $qualifications->have_posts() ): ?>
+      <?php while ($qualifications->have_posts()) : $qualifications->the_post(); ?>
         <tr>
           <td>
             <?php the_field('schwerpunkt'); ?>
