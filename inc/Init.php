@@ -17,7 +17,8 @@ final class Init
       Pages\Admin::class,
       Base\CounselingCenter::class,
       Base\EmploymentAgency::class,
-      Base\QualificationCenter::class
+      Base\QualificationCenter::class,
+      Base\Counselings::class,
     ];
   }
 
