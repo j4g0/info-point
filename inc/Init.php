@@ -14,11 +14,12 @@ final class Init
   private static function get_services()
   {
     return [
-      Pages\Admin::class,
+      Base\Enqueue::class,
+      Api\AdvancedCustomFields::class,
+      Pages\Dashboard::class,
       Base\CounselingsController::class,
       Base\EmploymentsController::class,
       Base\QualificationsController::class,
-      Api\AdvancedCustomFields::class,
     ];
   }
 

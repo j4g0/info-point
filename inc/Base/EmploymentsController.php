@@ -5,10 +5,16 @@
 
 namespace Inc\Base;
 
+use Inc\Api\SettingsApi;
 use Inc\Base\BaseController;
+use Inc\Api\Callbacks\AdminCallbacks;
 
 class EmploymentsController extends BaseController
 {
+  public $settings;
+  public $callbacks;
+  public $subpages        = [];
+
   /**
    * @var string
    *
@@ -21,8 +27,36 @@ class EmploymentsController extends BaseController
 
   public function register()
   {
+    $option     = get_option( 'info_point' );
+    $activated  = isset( $option['employment'] ) ? ($option['employment'] ? true : false) : false;
+
+    if (!$activated) {
+      return;
+    }
+
+    $this->settings = new SettingsApi();
+
+    $this->callbacks = new AdminCallbacks();
+
+    $this->setSubPages();
+
     add_action( 'init', [ $this, 'register_post_type' ] );
     add_shortcode( 'ip_vermittlung', [ $this, 'shortcode' ] );
+
+    $this->settings->addSubPages( $this->subpages )->register();
+  }
+
+  public function setSubPages()
+  {
+    $this->subpages = [
+      [
+        'parent_slug'   => 'info_point',
+        'page_title'    => 'Vermittlungsstellen',
+        'menu_title'    => 'Vermittlung',
+        'capability'    => 'manage_options',
+        'menu_slug'     => 'edit.php?post_type=employment',
+      ],
+    ];
   }
 
   /**

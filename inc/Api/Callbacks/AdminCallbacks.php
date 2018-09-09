@@ -14,29 +14,31 @@ class AdminCallbacks extends BaseController
     return require_once( "$this->plugin_path/templates/admin.php" );
   }
 
-  public function infoPointOptionsGroup( $input )
+  public function checkboxSanitize( $input )
   {
-    return $input;
+    $output = [];
+    foreach ($this->features as $key => $value) {
+      $output[$key] = ( isset( $input[$key] ) ? true : false );
+    }
+
+    return $output;
   }
 
   public function infoPointAdminSection()
   {
-    echo 'Admin section under development';
+    echo 'Plugin Features verwalten';
   }
 
-  public function infoPointTextExample()
+  public function checkboxField( $args )
   {
-    $value = esc_attr( get_option( 'text_example' ) );
+    $name         = $args['label_for'];
+    $classes      = $args['classes'];
+    $option_name  = $args['option_name'];
+    $checkbox     = get_option( $option_name );
+
+    $checked      = isset( $checkbox[$name] ) ? ($checkbox[$name] ? true : false) : false;
     echo '
-      <input type="text" class="regular-text" name="text_example" value="' . $value .'" placeholder="Write something here!">
+      <input type="checkbox" name="' . $option_name . '[' . $name . ']" value="1" class="' . $classes . '" ' . ( $checked ? 'checked' : '' ) . '>
     ';
   }
-
-  public function infoPointFirstName()
-  {
-    $value = esc_attr( get_option( 'first_name' ) );
-    echo '
-      <input type="text" class="regular-text" name="first_name" value="' . $value .'" placeholder="Write your first name">
-    '; 
-  } 
 }

@@ -5,7 +5,6 @@
   $qualifications = new WP_QUERY( $args );
 ?>
 
-<h1>Beratungen Template</h1>
 <table>
   <thead>
     <tr>
